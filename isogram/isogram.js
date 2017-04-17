@@ -1,18 +1,25 @@
 class Isogram {
   constructor(word) {
     this.word = word
+      .toLowerCase()
+      .split('')
+      .filter(this.lettersOnly);
+  }
+
+  lettersOnly(char) {
+    return char.match(/(?!\s|\-)\W|[a-z]/g);
   }
 
   isIsogram() {
     let listWord = {};
 
-    this.word.toLowerCase().split('').map(cha => {
-      listWord[cha] ? listWord[cha]++ : listWord[cha] = 1;
+    this.word.map(char => {
+      listWord[char] ? listWord[char]++ : listWord[char] = 1;
     });
 
     let result = true;
-    Object.keys(listWord).forEach(cha => {
-      if (listWord[cha] > 1 && cha !== '-' && cha !== ' ') result = false;
+    Object.keys(listWord).forEach(char => {
+      if (listWord[char] > 1) result = false;
     });
     return result;
   }
